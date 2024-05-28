@@ -1,12 +1,5 @@
 export default function createIteratorObject(report) {
-  const newMap = Object.values(report.allEmployees);
-  const newList = [];
-  for (const value of newMap) {
-    for (const item of value) {
-      newList.push(item);
-    }
-  }
-
+  const newList = Object.values(report.allEmployees).flatMap((value) => value);
   return {
     [Symbol.iterator]() {
       let counter = 0;
