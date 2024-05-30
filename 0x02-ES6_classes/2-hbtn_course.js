@@ -20,7 +20,7 @@ export default class HolbertonCourse {
     }
     if (Array.isArray(value)) {
       if (!value.every((v) => typeof (v) === 'string')) {
-        throw new TypeError(`${key} must be a ${type}`);
+        throw new TypeError(`${key} must be an array of Strings`);
       }
     }
   }
