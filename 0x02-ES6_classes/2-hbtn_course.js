@@ -18,8 +18,8 @@ export default class HolbertonCourse {
         throw new TypeError(`${key} must be a ${type}`);
       }
     }
-    if (Array.isArray(value)) {
-      if (!value.every((v) => typeof (v) === 'string')) {
+    if (type === 'object') {
+      if (!(Array.isArray(value) && value.every((v) => typeof (v) === 'string'))) {
         throw new TypeError(`${key} must be an array of Strings`);
       }
     }
@@ -28,7 +28,7 @@ export default class HolbertonCourse {
   /**
    * @param {string} name - The name of the course.
    * @param {number} length - The length of the course.
-   * @param (string[]) students = the students names
+   * @param {string[]} students = the students names
    */
   constructor(name, length, students) {
     HolbertonCourse.checkType('Name', name, 'string');
