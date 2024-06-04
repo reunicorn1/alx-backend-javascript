@@ -1,8 +1,5 @@
 export default function cleanSet(set, startString) {
-  if (!(set instanceof Set || Array.from(set).every((item) => typeof item === 'string'))) {
-    return undefined;
-  }
-  if (typeof startString === 'string' && startString) {
+  if (set && set instanceof Set && startString && typeof startString === 'string') {
     const concat = [];
     set.forEach((item) => {
       if (item.startsWith(startString)) {
