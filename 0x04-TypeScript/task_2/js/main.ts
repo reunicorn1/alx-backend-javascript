@@ -1,10 +1,16 @@
+// 5. Advanced types Part 1
 interface DirectorInterface {
 	workFromHome(): string;
 	getCoffeeBreak(): string;
 	workDirectorTasks(): string;
 }
 
-interface TeacherInterface extends DirectorInterface {}
+interface TeacherInterface {
+	workFromHome(): string;
+	getCoffeeBreak(): string;
+	workTeacherTasks(): string;
+
+}
 
 class Director implements DirectorInterface {
 	workFromHome(): string {
@@ -29,7 +35,7 @@ class Teacher implements TeacherInterface {
 		return 'Cannot have a break';
 	}
 
-	workDirectorTasks(): string {
+	workTeacherTasks(): string {
 		return 'Getting to work';
 	}
 }
@@ -46,3 +52,21 @@ console.log(createEmployee(200));
 console.log(createEmployee(1000));
 console.log(createEmployee('$500'));
 
+
+// 6. Creating functions specific to employees
+type Employee = Director | Teacher;
+
+function isDirector(employee: Employee): boolean {
+	return employee instanceof Director;
+}
+
+function executeWork(employee: Employee): string {
+	if (employee instanceof Director) {
+		return employee.workDirectorTasks();
+	} else {
+		return employee.workTeacherTasks();
+	}
+}
+
+console.log(executeWork(createEmployee(200)));
+console.log(executeWork(createEmployee(1000)));
