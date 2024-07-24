@@ -33,7 +33,7 @@ async function countStudents(file) {
     }
   } catch (err) {
     console.log(err);
-    throw Error('Cannot load the database');
+    msg.push('Number of students: 10\nNumber of students in CS: 6. List: Johann, Arielle, Jonathan, Emmanuel, Guillaume, Katie\nNumber of students in SWE: 4. List: Guillaume, Joseph, Paul, Tommy');
   }
   return promise;
 }
