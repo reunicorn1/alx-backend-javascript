@@ -32,8 +32,7 @@ async function countStudents(file) {
       msg.push(`Number of students in ${key}: ${students.length}. List: ${string}`);
     }
   } catch (err) {
-    console.log(err);
-    msg.push('Number of students: 10\nNumber of students in CS: 6. List: Johann, Arielle, Jonathan, Emmanuel, Guillaume, Katie\nNumber of students in SWE: 4. List: Guillaume, Joseph, Paul, Tommy');
+    throw new Error('Cannot load the database');
   }
   return promise;
 }
@@ -47,15 +46,15 @@ const app = http.createServer((req, res) => {
       res.end('Hello Holberton School!');
       break;
     case '/students':
-      countStudents('database.csv')
+      countStudents('database.csvf')
         .then(() => {
           msg = msg.join('\n');
-        })
-        .then(() => {
           res.end(`This is the list of our students\n${msg}`);
         })
-        .catch((error) => {
-          console.log(error);
+        .catch((err) => {
+          msg.push(err instanceof Error ? err.message : err.toString());
+          msg = msg.join('\n');
+          res.end(`This is the list of our students\n${msg}`);
         });
       break;
     default:
