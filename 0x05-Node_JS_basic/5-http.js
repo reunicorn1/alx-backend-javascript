@@ -2,6 +2,8 @@ const http = require('http');
 const fsPromises = require('fs').promises;
 const path = require('path');
 
+const DB_FILE = process.argv.length > 2 ? process.argv[2] : '';
+
 const PORT = 1245;
 let msg = [];
 
@@ -46,7 +48,7 @@ const app = http.createServer((req, res) => {
       res.end('Hello Holberton School!');
       break;
     case '/students':
-      countStudents('database.csv')
+      countStudents(DB_FILE)
         .then(() => {
           msg = msg.join('\n');
           res.end(`This is the list of our students\n${msg}`);
