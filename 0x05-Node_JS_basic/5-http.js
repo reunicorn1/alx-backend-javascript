@@ -46,7 +46,7 @@ const app = http.createServer((req, res) => {
       res.end('Hello Holberton School!');
       break;
     case '/students':
-      countStudents('database.csvf')
+      countStudents('database.csv')
         .then(() => {
           msg = msg.join('\n');
           res.end(`This is the list of our students\n${msg}`);
