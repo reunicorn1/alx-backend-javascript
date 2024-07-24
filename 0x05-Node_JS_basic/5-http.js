@@ -1,45 +1,68 @@
 const http = require('http');
+const fsPromises = require('fs').promises;
+const path = require('path');
 
 const PORT = 1245;
+let msg = [];
 
-// overriding the normal behavior or console.log
-const originalLog = console.log;
-let students = [];
-console.log = (input) => {
-  students.push(`${input}`);
-};
+// counStudents function
+async function countStudents(file) {
+  const promise = fsPromises.readFile(path.join(__dirname, file), 'utf8');
+  try {
+    const contents = await promise;
+    const std = contents.trim().split('\n');
+    std.shift(); // remove the first element which is the title
 
-// calling the function
-const countStudents = require('./3-read_file_async');
+    msg.push(`Number of students: ${std.length}`);
 
-let app;
-countStudents('database.csv')
-  .then(() => {
-    // Restoring normal behavior of console.log
-    students = students.join('\n');
-    console.log = originalLog;
-  })
-  .then(() => {
-    // Setting the server
-    app = http.createServer((req, res) => {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-
-      switch (req.url) {
-        case '/':
-          res.end('Hello Holberton School!');
-          break;
-        case '/students':
-          res.end(`This is the list of our students\n${students}`);
-          break;
-        default:
-          res.end('');
+    const fields = {};
+    // firstname,lastname,age,field
+    for (const value of std) {
+      const student = value.split(',');
+      if (!Object.keys(fields).includes(student[3])) {
+        fields[student[3]] = [student[0]];
+      } else {
+        fields[student[3]].push(student[0]);
       }
-    });
+    }
 
-    app.listen(PORT);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    for (const key of Object.keys(fields)) {
+      const students = fields[key];
+      const string = students.join(', ');
+      msg.push(`Number of students in ${key}: ${students.length}. List: ${string}`);
+    }
+  } catch (err) {
+    console.log(err);
+    throw Error('Cannot load the database');
+  }
+  return promise;
+}
+
+// Setting the server
+const app = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+
+  switch (req.url) {
+    case '/':
+      res.end('Hello Holberton School!');
+      break;
+    case '/students':
+      countStudents('database.csv')
+        .then(() => {
+          msg = msg.join('\n');
+        })
+        .then(() => {
+          res.end(`This is the list of our students\n${msg}`);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      break;
+    default:
+      res.end('');
+  }
+});
+
+app.listen(PORT);
 
 module.exports = app;
