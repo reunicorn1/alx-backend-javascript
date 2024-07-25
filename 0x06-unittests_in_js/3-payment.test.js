@@ -11,5 +11,7 @@ describe("sendPaymentRequestToApi", () => {
         const spy = sinon.spy(utility, "calculateNumber");
         sendPaymentRequestToApi(100, 20);
         expect(spy.calledOnceWith("SUM", 100, 20)).to.be.true
+        spy.restore()
     })
+    
 })
