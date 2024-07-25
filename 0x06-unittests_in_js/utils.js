@@ -1,5 +1,5 @@
-class Utils {
-    calculateNumber(type, a, b) {
+const Utils = {
+    calculateNumber: (type, a, b) => {
         const operations = {
             'SUM': (a, b) => a + b,
             'SUBTRACT': (a, b) => a - b,

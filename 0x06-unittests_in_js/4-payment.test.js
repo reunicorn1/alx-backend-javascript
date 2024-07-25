@@ -4,11 +4,10 @@ const chai = require('chai');
 const expect = chai.expect;
 const sinon = require("sinon");
 
-utility = new Utils()
 
 describe("sendPaymentRequestToApi", () => {
     it("spy on the utils calculateNumber method", () => {
-        const stub = sinon.stub(utility, "calculateNumber");
+        const stub = sinon.stub(Utils, "calculateNumber");
         const spy = sinon.spy(console, "log")
         stub.returns(10)
 
