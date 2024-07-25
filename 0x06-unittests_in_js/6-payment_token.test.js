@@ -2,8 +2,8 @@ const getPaymentTokenFromAPI = require('./6-payment_token');
 const chai = require('chai');
 const expect = chai.expect;
 
-describe("getPaymentTokenFromAPI", (done) => {
-    it("Async tests with done", () => {
+describe("getPaymentTokenFromAPI", () => {
+    it("Async tests with done", (done) => {
         getPaymentTokenFromAPI(true).then((result) => {
             expect(result)
                 .which.is.an("object")
