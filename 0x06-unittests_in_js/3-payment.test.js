@@ -7,11 +7,11 @@ const sinon = require("sinon");
 utility = new Utils()
 
 describe("sendPaymentRequestToApi", () => {
-    it("spy the utils calculateNumber method", () => {
+    it("spy on the utils calculateNumber method", () => {
         const spy = sinon.spy(utility, "calculateNumber");
         sendPaymentRequestToApi(100, 20);
         expect(spy.calledOnceWith("SUM", 100, 20)).to.be.true
+        expect(spy.returned(120)).to.be.true
         spy.restore()
     })
-    
 })
