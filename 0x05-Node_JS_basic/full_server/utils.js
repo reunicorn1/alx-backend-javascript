@@ -1,6 +1,5 @@
 import fs from 'fs';
 
-
 const readDatabase = (dataPath) => new Promise((resolve, reject) => {
   if (!dataPath) {
     reject(new Error('Cannot load the database'));
@@ -39,4 +38,4 @@ const readDatabase = (dataPath) => new Promise((resolve, reject) => {
 });
 
 export default readDatabase;
-module.exports = readDatabase
+module.exports = readDatabase;
